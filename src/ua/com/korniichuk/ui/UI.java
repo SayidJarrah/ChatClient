@@ -14,10 +14,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 
 public class UI {
     static TextArea messagesAreaField;
     static TextArea newMessageField;
+    static ListView<String> activeUsersView;
 
 
     public void initUI(Stage stage) {
@@ -59,12 +62,7 @@ public class UI {
         newMessageField.setPrefSize(350, 60);
         vBoxLeftContainer.getChildren().addAll(messagesAreaField, newMessageField);
 
-
-        ObservableList activeUsers = FXCollections.observableArrayList("ffff", "ddddd");
-        ListView<String> activeUsersView = new ListView<>();
-
-        activeUsersView.setItems(activeUsers);
-
+        activeUsersView = new ListView<>();
 
         vBoxRightContainer.getChildren().add(activeUsersView);
 
@@ -75,6 +73,11 @@ public class UI {
     public void outMessage(String message) {
         UI.messagesAreaField.appendText(message);
         UI.messagesAreaField.appendText(System.getProperty("line.separator"));
+    }
+
+    public void updateOnlineUsers(ArrayList<String> list){
+        ObservableList<String> observableList = FXCollections.observableArrayList(list);
+        activeUsersView.setItems(observableList);
     }
 
 

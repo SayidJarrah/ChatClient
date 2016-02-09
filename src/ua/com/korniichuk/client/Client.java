@@ -75,6 +75,8 @@ public class Client implements Runnable {
 
                         onlineUsers = ((OnlineUsers) object);
                         System.out.println("currently online :" + onlineUsers);
+                        userInterface.updateOnlineUsers(((OnlineUsers) object).getUsers());
+
                     }
                 }
             } catch (IOException e) {
