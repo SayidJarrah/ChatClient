@@ -25,7 +25,7 @@ public class UI {
 
     public void initUI(Stage stage) {
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 800, 400, Color.GHOSTWHITE);
+        Scene scene = new Scene(root, 700, 400, Color.GHOSTWHITE);
         stage.setScene(scene);
 
         VBox vBoxLeftContainer = new VBox();

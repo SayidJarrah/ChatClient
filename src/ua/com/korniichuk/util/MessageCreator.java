@@ -9,7 +9,7 @@ public class MessageCreator {
 
     public Message createMessage(String nick, String text) {
         Message message = new Message();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         message.setNick(nick);
         message.setTime(format.format(new Date()));
         message.setText(text);

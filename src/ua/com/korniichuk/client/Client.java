@@ -61,12 +61,13 @@ public class Client implements Runnable {
         @Override
         public void run() {
             try (ObjectInputStream objectInput = new ObjectInputStream(in)) {
-                String introductionMessage = objectInput.readUTF();
-                System.out.println(introductionMessage);
                 Thread.currentThread().sleep(3000);
-                userInterface.outMessage(introductionMessage);
                 while (true) {
                     Object object = objectInput.readObject();
+                    if (object instanceof String){
+                        System.out.println(object);
+                        userInterface.outMessage(object.toString());
+                    }
                     if (object instanceof Message) {
                         System.out.println("received: " + object);
                         userInterface.outMessage(object.toString());
