@@ -23,8 +23,9 @@ public class Starter extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        UI userInterface = new UI();
         primaryStage.setTitle("ClientChat v.1.0");
-        UI.initUI(primaryStage);
+        userInterface.initUI(primaryStage);
         primaryStage.show();
 
     }
