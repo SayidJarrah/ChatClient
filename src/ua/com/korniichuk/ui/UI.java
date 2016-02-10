@@ -1,29 +1,32 @@
 package ua.com.korniichuk.ui;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class UI {
     static TextArea messagesAreaField;
     static TextArea newMessageField;
-    static ListView<String> activeUsersView;
+    static TextArea activeUsersView;
+    public final static List<String> holder = new ArrayList<>();
 
 
-    public void initUI(Stage stage) {
+    public void initUI(Stage stage) throws IOException {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 700, 400, Color.GHOSTWHITE);
         stage.setScene(scene);
@@ -62,10 +65,22 @@ public class UI {
         newMessageField.setPrefSize(350, 60);
         vBoxLeftContainer.getChildren().addAll(messagesAreaField, newMessageField);
 
-        activeUsersView = new ListView<>();
+        activeUsersView = new TextArea();
+        activeUsersView.setPrefSize(200, 500);
 
         vBoxRightContainer.getChildren().add(activeUsersView);
 
+        newMessageField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                synchronized (holder) {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        holder.add(newMessageField.getText());
+                        holder.notifyAll();
+                    }
+                }
+            }
+        });
 
 
     }
@@ -75,9 +90,14 @@ public class UI {
         UI.messagesAreaField.appendText(System.getProperty("line.separator"));
     }
 
-    public void updateOnlineUsers(ArrayList<String> list){
-        ObservableList<String> observableList = FXCollections.observableArrayList(list);
-        activeUsersView.setItems(observableList);
+    public void updateOnlineUsers(final ArrayList<String> list) {
+        activeUsersView.clear();
+        for (String element : list) {
+            activeUsersView.appendText(element);
+            activeUsersView.appendText(System.getProperty("line.separator"));
+        }
+
+
     }
 
 
