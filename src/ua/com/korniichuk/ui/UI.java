@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -12,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class UI {
 
     public void initUI(Stage stage) throws IOException {
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 700, 400, Color.GHOSTWHITE);
+        Scene scene = new Scene(root, 550, 400, Color.GHOSTWHITE);
         stage.setScene(scene);
 
         VBox vBoxLeftContainer = new VBox();
@@ -47,7 +49,7 @@ public class UI {
         root.setTop(hBoxTopContainer);
 
         TextField serverAddressField = new TextField();
-        serverAddressField.setPrefSize(200, 25);
+        serverAddressField.setPrefSize(290, 25);
         serverAddressField.setText("localhost:5432");
 
         Button connectButton = new Button("Connect");
@@ -59,6 +61,7 @@ public class UI {
 
         messagesAreaField.setPrefSize(400, 250);
         messagesAreaField.setEditable(false);
+        messagesAreaField.setFont(Font.font("Verdana",14));
 
 
         newMessageField = new TextArea();
@@ -66,9 +69,16 @@ public class UI {
         vBoxLeftContainer.getChildren().addAll(messagesAreaField, newMessageField);
 
         activeUsersView = new TextArea();
-        activeUsersView.setPrefSize(200, 500);
+        activeUsersView.setPrefSize(100, 290);
+        activeUsersView.setEditable(false);
+        activeUsersView.setFont(Font.font("Verdana",14));
+        activeUsersView.setPadding(new Insets(10));
 
-        vBoxRightContainer.getChildren().add(activeUsersView);
+        Label activeUsersLabel = new Label("Users online");
+        activeUsersLabel.setFont(Font.font("Verdana",16));
+
+
+        vBoxRightContainer.getChildren().addAll(activeUsersLabel, activeUsersView);
 
         newMessageField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -85,21 +95,5 @@ public class UI {
 
 
     }
-
-    public void outMessage(String message) {
-        UI.messagesAreaField.appendText(message);
-        UI.messagesAreaField.appendText(System.getProperty("line.separator"));
-    }
-
-    public void updateOnlineUsers(final ArrayList<String> list) {
-        activeUsersView.clear();
-        for (String element : list) {
-            activeUsersView.appendText(element);
-            activeUsersView.appendText(System.getProperty("line.separator"));
-        }
-
-
-    }
-
 
 }

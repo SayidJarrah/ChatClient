@@ -6,9 +6,6 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/**
- * Created by Dima on 05.02.2016.
- */
 public class OnlineUsersService {
     Socket socket;
 
