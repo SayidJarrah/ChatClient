@@ -35,11 +35,11 @@ public class Message implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(nick).append(" ");
-        sb.append("[");
-        sb.append(time);
-        sb.append("] ");
-        sb.append(text);
+        sb.append(nick).append(" ")
+        .append("[")
+        .append(time)
+        .append("] ")
+        .append(text);
         return sb.toString();
     }
 }

@@ -57,7 +57,7 @@ public class UI {
 
         messagesAreaField = new TextArea();
 
-        messagesAreaField.setPrefSize(350, 250);
+        messagesAreaField.setPrefSize(400, 250);
         messagesAreaField.setEditable(false);
 
 
@@ -76,6 +76,7 @@ public class UI {
                 synchronized (holder) {
                     if (event.getCode().equals(KeyCode.ENTER)) {
                         holder.add(newMessageField.getText());
+                        newMessageField.clear();
                         holder.notifyAll();
                     }
                 }

@@ -16,8 +16,6 @@ public class Client implements Runnable {
     UI userInterface = new UI();
     public static String inputUImessage;
 
-    public final static Object lock = new Object();
-
 
     public Client() throws IOException {
         Socket socket = new Socket("localhost", 5432);
@@ -32,7 +30,7 @@ public class Client implements Runnable {
         synchronized (UI.holder) {
             MessageCreator messageCreator = new MessageCreator();
             try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
-                synchronized (UI.holder) {}
+
                 while (UI.holder.isEmpty()) {
                     UI.holder.wait();
                 }
@@ -48,7 +46,10 @@ public class Client implements Runnable {
                 oos.flush();
 
                 while (true) {
-                    String text = userInput.readLine();
+                    while (UI.holder.isEmpty()) {
+                        UI.holder.wait();
+                    }
+                    String text = UI.holder.remove(0);
                     Message message = messageCreator.createMessage(nickName, text);
                     oos.writeObject(message);
                     oos.flush();
@@ -74,36 +75,36 @@ public class Client implements Runnable {
         @Override
         public void run() {
 
-                try (ObjectInputStream objectInput = new ObjectInputStream(in)) {
+            try (ObjectInputStream objectInput = new ObjectInputStream(in)) {
 
-                    Thread.currentThread().sleep(3000);
-                    while (true) {
-                        Object object = objectInput.readObject();
-                        if (object instanceof OnlineUsers) {
-                            onlineUsers = ((OnlineUsers) object);
-                            System.out.println("currently online :" + onlineUsers);
-                            userInterface.updateOnlineUsers(((OnlineUsers) object).getUsers());
+                Thread.currentThread().sleep(3000);
+                while (true) {
+                    Object object = objectInput.readObject();
+                    if (object instanceof OnlineUsers) {
+                        onlineUsers = ((OnlineUsers) object);
+                        System.out.println("currently online :" + onlineUsers);
+                        userInterface.updateOnlineUsers(((OnlineUsers) object).getUsers());
+                    } else {
+                        if (object instanceof String) {
+                            System.out.println(object);
+                            userInterface.outMessage((String) object);
                         } else {
-                            if (object instanceof String) {
-                                System.out.println(object);
+                            if (object instanceof Message) {
+                                System.out.println("received: " + object);
                                 userInterface.outMessage(object.toString());
-                            } else {
-                                if (object instanceof Message) {
-                                    System.out.println("received: " + object);
-                                    userInterface.outMessage(object.toString());
-                                }
                             }
                         }
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
+    }
 
 
 }
