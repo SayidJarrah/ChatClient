@@ -3,7 +3,7 @@ package ua.com.korniichuk.client;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-    String existingNickName;
+    private String existingNickName;
 
     public String getExistingNickName() {
         return existingNickName;
