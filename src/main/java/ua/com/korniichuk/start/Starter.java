@@ -16,15 +16,18 @@ import java.util.concurrent.Executors;
 
 public class Starter extends Application {
 
-    public static void main(String[] args) throws IOException {
-        Socket socket = new Socket("localhost", 5432);
+    public static void main(String[] args)  {
+        launch(args);
+
+    }
+
+    public static void launcher(String host, int port) throws IOException{
+        Socket socket = new Socket(host, port);
         Sender sender = new Sender(socket);
         Listener listener = new Listener(socket);
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(listener);
         executorService.submit(sender);
-
-        launch(args);
 
     }
 
@@ -35,7 +38,5 @@ public class Starter extends Application {
         userInterface.initUI(primaryStage);
         primaryStage.setOnCloseRequest(e -> Platform.exit());
         primaryStage.show();
-
-
     }
 }

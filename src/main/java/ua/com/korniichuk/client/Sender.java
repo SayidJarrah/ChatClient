@@ -32,8 +32,8 @@ public class Sender implements Runnable {
                 if (nickName.equals("")) {
                     nickName = CLIENT_IP;
                 }
-                    oos.writeObject(nickName);
-                    oos.flush();
+                oos.writeObject(nickName);
+                oos.flush();
 
                 while (true) {
                     while (UI.holder.isEmpty()) {
@@ -44,10 +44,8 @@ public class Sender implements Runnable {
                     oos.writeObject(message);
                     oos.flush();
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -57,7 +55,7 @@ public class Sender implements Runnable {
         try {
             sender();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

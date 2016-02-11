@@ -1,6 +1,6 @@
 package ua.com.korniichuk.ui;
 
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import ua.com.korniichuk.start.Starter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +57,24 @@ public class UI {
 
         Button connectButton = new Button("Connect");
         connectButton.setPrefSize(100, 20);
+
+        connectButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (serverAddressField.getText().equals(null)||serverAddressField.getText().isEmpty()){
+                    serverAddressField.setText("Enter server address!!!");
+                }
+                else{
+                    String[] serverAddress = serverAddressField.getText().split(":");
+                    try {
+                        Starter.launcher(serverAddress[0],Integer.parseInt(serverAddress[1]));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            }
+        });
 
         hBoxTopContainer.getChildren().addAll(serverAddressField, connectButton);
 

@@ -18,12 +18,10 @@ public class Listener implements Runnable {
     public Listener(Socket socket) throws IOException {
         in = socket.getInputStream();
     }
+
     @Override
     public void run() {
-
         try (ObjectInputStream objectInput = new ObjectInputStream(in)) {
-
-            Thread.currentThread().sleep(3000);
             while (true) {
                 Object object = objectInput.readObject();
                 if (object instanceof ArrayList) {
@@ -42,12 +40,8 @@ public class Listener implements Runnable {
                     }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
