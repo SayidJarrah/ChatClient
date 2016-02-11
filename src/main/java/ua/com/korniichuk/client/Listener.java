@@ -1,6 +1,7 @@
 package ua.com.korniichuk.client;
 
 import ua.com.korniichuk.ui.Controller;
+import ua.com.korniichuk.ui.UI;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +37,12 @@ public class Listener implements Runnable {
                         if (object instanceof Message) {
                             System.out.println("received: " + object);
                             uiController.outMessage(object.toString());
+                        }else { if (object instanceof Account) {
+                           // uiController.outMessage(((Account) object).getExistingNickName());
+                            UI.holder.add(((Account) object).getExistingNickName());
                         }
+                        }
+
                     }
                 }
             }
