@@ -10,31 +10,30 @@ import java.net.Socket;
 public class Sender implements Runnable {
 
     private OutputStream out;
-    private BufferedReader userInput;
-
+    private final String CLIENT_IP = Inet4Address.getLocalHost().getHostAddress();
 
 
     public Sender(Socket socket) throws IOException {
         out = socket.getOutputStream();
-        userInput = new BufferedReader(new InputStreamReader(System.in));
     }
 
     public void sender() throws IOException {
         synchronized (UI.holder) {
             MessageCreator messageCreator = new MessageCreator();
             try (ObjectOutputStream oos = new ObjectOutputStream(out)) {
-
+                oos.writeObject(CLIENT_IP);
                 while (UI.holder.isEmpty()) {
                     UI.holder.wait();
                 }
+
                 String nickName = UI.holder.remove(0);
                 System.out.println("client :" + nickName);
 
                 if (nickName.equals("")) {
-                    nickName = Inet4Address.getLocalHost().getHostAddress();
+                    nickName = CLIENT_IP;
                 }
-                oos.writeObject(nickName);
-                oos.flush();
+                    oos.writeObject(nickName);
+                    oos.flush();
 
                 while (true) {
                     while (UI.holder.isEmpty()) {
@@ -61,8 +60,6 @@ public class Sender implements Runnable {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

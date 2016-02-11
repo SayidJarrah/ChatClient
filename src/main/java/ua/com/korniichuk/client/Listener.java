@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Listener implements Runnable {
     private InputStream in;
-   // public static OnlineUsers onlineUsers;
+    public static ArrayList<String> activeUsers;
     Controller uiController = new Controller();
 
 
@@ -27,8 +27,8 @@ public class Listener implements Runnable {
             while (true) {
                 Object object = objectInput.readObject();
                 if (object instanceof ArrayList) {
-                 //   onlineUsers = ((OnlineUsers) object);
                     System.out.println("currently online :" + object);
+                    activeUsers = (ArrayList<String>) object;
                     uiController.updateOnlineUsers((ArrayList<String>) object);
                 } else {
                     if (object instanceof String) {
