@@ -1,5 +1,6 @@
 package ua.com.korniichuk.ui;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -32,6 +33,7 @@ public class UI {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 550, 400, Color.GHOSTWHITE);
         stage.setScene(scene);
+
 
         VBox vBoxLeftContainer = new VBox();
         vBoxLeftContainer.setPadding(new Insets(10));

@@ -1,15 +1,17 @@
 package ua.com.korniichuk.client;
 
 import ua.com.korniichuk.ui.Controller;
-import ua.com.korniichuk.util.OnlineUsers;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 
 public class Listener implements Runnable {
     private InputStream in;
-    public static OnlineUsers onlineUsers;
+   // public static OnlineUsers onlineUsers;
     Controller uiController = new Controller();
 
 
@@ -24,10 +26,10 @@ public class Listener implements Runnable {
             Thread.currentThread().sleep(3000);
             while (true) {
                 Object object = objectInput.readObject();
-                if (object instanceof OnlineUsers) {
-                    onlineUsers = ((OnlineUsers) object);
-                    System.out.println("currently online :" + onlineUsers);
-                    uiController.updateOnlineUsers(((OnlineUsers) object).getUsers());
+                if (object instanceof ArrayList) {
+                 //   onlineUsers = ((OnlineUsers) object);
+                    System.out.println("currently online :" + object);
+                    uiController.updateOnlineUsers((ArrayList<String>) object);
                 } else {
                     if (object instanceof String) {
                         System.out.println(object);

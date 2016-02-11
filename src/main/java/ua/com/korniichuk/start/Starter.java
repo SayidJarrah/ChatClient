@@ -2,6 +2,7 @@ package ua.com.korniichuk.start;
 
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import ua.com.korniichuk.client.Sender;
 import ua.com.korniichuk.client.Listener;
@@ -32,7 +33,9 @@ public class Starter extends Application {
         UI userInterface = new UI();
         primaryStage.setTitle("ClientChat v.1.0");
         userInterface.initUI(primaryStage);
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
         primaryStage.show();
+
 
     }
 }
