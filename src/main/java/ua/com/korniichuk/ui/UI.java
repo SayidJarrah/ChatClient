@@ -51,16 +51,21 @@ public class UI {
         hBoxTopContainer.setSpacing(10);
         root.setTop(hBoxTopContainer);
 
-        TextField serverAddressField = new TextField();
+        final TextField serverAddressField = new TextField();
         serverAddressField.setPrefSize(290, 25);
         serverAddressField.setText("localhost:5432");
 
         Button connectButton = new Button("Connect");
         connectButton.setPrefSize(100, 20);
 
+        Button disconnectButton = new Button("Disconnect");
+        disconnectButton.setPrefSize(100,20);
+
+
         connectButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                newMessageField.setDisable(false);
                 if (serverAddressField.getText().equals(null)||serverAddressField.getText().isEmpty()){
                     serverAddressField.setText("Enter server address!!!");
                 }
@@ -68,15 +73,41 @@ public class UI {
                     String[] serverAddress = serverAddressField.getText().split(":");
                     try {
                         Starter.launcher(serverAddress[0],Integer.parseInt(serverAddress[1]));
+                        connectButton.setDisable(true);
+                        disconnectButton.setDisable(false);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        System.out.println("connection trouble");
+                        Stage errorMessageStage = new Stage();
+                        errorMessageStage.setTitle("Connection troubles");
+                        errorMessageStage.show();
+                        BorderPane errorMessageRoot = new BorderPane();
+                        Scene errorMessageScene = new Scene(errorMessageRoot,270,60,Color.YELLOWGREEN);
+                        errorMessageStage.setScene(errorMessageScene);
+                        Label errorMessageLabel = new Label("Server isn't available. Try again later...");
+                        errorMessageRoot.setCenter(errorMessageLabel);
                     }
 
                 }
             }
         });
 
-        hBoxTopContainer.getChildren().addAll(serverAddressField, connectButton);
+        disconnectButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                connectButton.setDisable(false);
+                try {
+                    Starter.getSocket().shutdownOutput();
+                    Starter.getSocket().shutdownInput();
+                    newMessageField.setDisable(true);
+                    activeUsersView.clear();
+                    disconnectButton.setDisable(true);
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        hBoxTopContainer.getChildren().addAll(serverAddressField, connectButton,disconnectButton);
 
         messagesAreaField = new TextArea();
 

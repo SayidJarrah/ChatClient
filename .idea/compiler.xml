@@ -25,5 +25,8 @@
         <module name="ChatClient" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="ChatClient" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
