@@ -3,9 +3,11 @@ package ua.com.korniichuk.start;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import ua.com.korniichuk.client.Sender;
+import javafx.stage.WindowEvent;
 import ua.com.korniichuk.client.Listener;
+import ua.com.korniichuk.client.Sender;
 import ua.com.korniichuk.ui.UI;
 
 import java.io.IOException;
@@ -16,13 +18,14 @@ import java.util.concurrent.Executors;
 
 public class Starter extends Application {
     private static Socket socket;
-    public static void main(String[] args)  {
+
+    public static void main(String[] args) {
         launch(args);
 
     }
 
-    public static void launcher(String host, int port) throws IOException{
-        socket= new Socket(host, port);
+    public static void launcher(String host, int port) throws IOException {
+        socket = new Socket(host, port);
         Sender sender = new Sender(socket);
         Listener listener = new Listener(socket);
         ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -36,7 +39,20 @@ public class Starter extends Application {
         UI userInterface = new UI();
         primaryStage.setTitle("ClientChat v.1.0");
         userInterface.initUI(primaryStage);
-        primaryStage.setOnCloseRequest(e -> Platform.exit());
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                try {
+                    socket.shutdownInput();
+                    socket.shutdownOutput();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    System.exit(0);
+                }
+            }
+        });
         primaryStage.show();
     }
 

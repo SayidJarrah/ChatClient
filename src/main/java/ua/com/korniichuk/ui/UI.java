@@ -66,8 +66,10 @@ public class UI {
             @Override
             public void handle(ActionEvent event) {
                 newMessageField.setDisable(false);
-                if (serverAddressField.getText().equals(null)||serverAddressField.getText().isEmpty()){
-                    serverAddressField.setText("Enter server address!!!");
+                if (serverAddressField.getText().equals(null)||
+                        serverAddressField.getText().isEmpty()||
+                        !serverAddressField.getText().contains(":")){
+                    serverAddressField.setText("Enter correct server address!!!");
                 }
                 else{
                     String[] serverAddress = serverAddressField.getText().split(":");
