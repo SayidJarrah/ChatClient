@@ -2,6 +2,7 @@
 
 
 <H2>Server side UML</H2>
+<H3>Link to server side: https://github.com/SayidJarrah/ChatServer</H3>
 ![alt tag](https://github.com/SayidJarrah/ChatClient/blob/master/screenshots/Server%20side%20(1).png)
 <H2>Client side UML</H2>
 ![alt tag](https://github.com/SayidJarrah/ChatClient/blob/master/screenshots/Client%20Side%20(1).png)
