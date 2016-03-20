@@ -1,7 +1,7 @@
-package ua.com.korniichuk.client;
+package ua.com.korniichuk.chatclient.client;
 
-import ua.com.korniichuk.ui.Controller;
-import ua.com.korniichuk.ui.UI;
+import ua.com.korniichuk.chatclient.ui.Controller;
+import ua.com.korniichuk.chatclient.ui.UI;
 
 import java.io.IOException;
 import java.io.InputStream;

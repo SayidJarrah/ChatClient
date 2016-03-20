@@ -40,7 +40,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>ua.com.korniichuk.start.Starter</mainClass>
+                            <mainClass>ua.com.korniichuk.chatclient.start.Starter</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

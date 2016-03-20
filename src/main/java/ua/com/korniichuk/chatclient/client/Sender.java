@@ -1,7 +1,7 @@
-package ua.com.korniichuk.client;
+package ua.com.korniichuk.chatclient.client;
 
-import ua.com.korniichuk.ui.UI;
-import ua.com.korniichuk.util.MessageCreator;
+import ua.com.korniichuk.chatclient.ui.UI;
+import ua.com.korniichuk.chatclient.util.MessageCreator;
 
 import java.io.*;
 import java.net.Inet4Address;

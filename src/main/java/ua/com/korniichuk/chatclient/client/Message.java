@@ -1,4 +1,4 @@
-package ua.com.korniichuk.client;
+package ua.com.korniichuk.chatclient.client;
 
 import java.io.Serializable;
 

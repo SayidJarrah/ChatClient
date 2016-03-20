@@ -1,6 +1,6 @@
-package ua.com.korniichuk.util;
+package ua.com.korniichuk.chatclient.util;
 
-import ua.com.korniichuk.client.Message;
+import ua.com.korniichuk.chatclient.client.Message;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

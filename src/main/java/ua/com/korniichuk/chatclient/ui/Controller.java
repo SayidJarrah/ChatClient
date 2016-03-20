@@ -1,4 +1,4 @@
-package ua.com.korniichuk.ui;
+package ua.com.korniichuk.chatclient.ui;
 
 
 import java.util.ArrayList;

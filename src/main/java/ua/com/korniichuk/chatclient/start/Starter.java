@@ -1,4 +1,4 @@
-package ua.com.korniichuk.start;
+package ua.com.korniichuk.chatclient.start;
 
 
 import javafx.application.Application;
@@ -6,9 +6,9 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import ua.com.korniichuk.client.Listener;
-import ua.com.korniichuk.client.Sender;
-import ua.com.korniichuk.ui.UI;
+import ua.com.korniichuk.chatclient.client.Sender;
+import ua.com.korniichuk.chatclient.client.Listener;
+import ua.com.korniichuk.chatclient.ui.UI;
 
 import java.io.IOException;
 import java.net.Socket;

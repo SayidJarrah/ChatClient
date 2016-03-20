@@ -1,4 +1,4 @@
-package ua.com.korniichuk.ui;
+package ua.com.korniichuk.chatclient.ui;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import ua.com.korniichuk.start.Starter;
+import ua.com.korniichuk.chatclient.start.Starter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class UI {
                 else{
                     String[] serverAddress = serverAddressField.getText().split(":");
                     try {
-                        Starter.launcher(serverAddress[0],Integer.parseInt(serverAddress[1]));
+                        Starter.launcher(serverAddress[0], Integer.parseInt(serverAddress[1]));
                         connectButton.setDisable(true);
                         disconnectButton.setDisable(false);
                     } catch (IOException e) {
